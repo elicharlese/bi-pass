@@ -1,4 +1,5 @@
 import type React from "react"
+import { Suspense } from "react"
 import "@/app/globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
@@ -25,18 +26,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <DemoProvider>
-          <NextAuthProvider>
-            <SolanaWalletProvider>
-              <AuthProvider>
-                <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-                  {children}
-                  <DemoModeIndicator />
-                </ThemeProvider>
-              </AuthProvider>
-            </SolanaWalletProvider>
-          </NextAuthProvider>
-        </DemoProvider>
+        <Suspense fallback={null}>
+          <DemoProvider>
+            <NextAuthProvider>
+              <SolanaWalletProvider>
+                <AuthProvider>
+                  <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+                    {children}
+                    <DemoModeIndicator />
+                  </ThemeProvider>
+                </AuthProvider>
+              </SolanaWalletProvider>
+            </NextAuthProvider>
+          </DemoProvider>
+        </Suspense>
       </body>
     </html>
   )
